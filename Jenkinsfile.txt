@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        SSH_KEY = credentials('8a55417d-06a3-4b2d-bda0-1c84f34cf805')
+        SSH_KEY = credentials('f2825fcd-e630-43da-ae1b-f0ebf49cf13e')
     }
 
     stages {
@@ -19,7 +19,7 @@ pipeline {
                     
 
                         // Use scp to copy the WAR file to the remote server
-                        bat "ssh -o StrictHostKeyChecking=no -i %SSH_KEY%   ec2-user@54.211.142.224 'mvn -v'"
+                        bat "ssh -o StrictHostKeyChecking=no -i %SSH_KEY%   ec2-user@35.175.151.190 'mvn -v'"
                       //  bat "ssh -i  %SSH_KEY% ec2-user@54.82.125.173 '/opt/tomcat/apache-tomcat-9.0.84/bin/startup.sh'"
                     }
                 }
