@@ -20,7 +20,7 @@ pipeline {
 
                         // Use scp to copy the WAR file to the remote server
                      //   bat "icacls  %SSH_KEY% /grant:r "ec2_user":(R)"
-                        bat "ssh -o StrictHostKeyChecking=no -i '%f2825fcd-e630-43da-ae1b-f0ebf49cf13e%' ec2-user@54.167.127.140 'mvn -v'"
+                        bat "ssh -o StrictHostKeyChecking=no -i %SSH_KEY% ec2-user@54.167.127.140 'mvn -v'"
                       //  bat "ssh -i  %SSH_KEY% ec2-user@54.82.125.173 '/opt/tomcat/apache-tomcat-9.0.84/bin/startup.sh'"
                     }
                 }
