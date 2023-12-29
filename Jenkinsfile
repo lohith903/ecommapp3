@@ -19,6 +19,7 @@ pipeline {
                     
 
                         // Use scp to copy the WAR file to the remote server
+                        bat "chmod 400 %SSH_KEY%"
                         bat "ssh -o StrictHostKeyChecking=no -i %SSH_KEY% ec2-user@54.167.127.140 'mvn -v'"
                       //  bat "ssh -i  %SSH_KEY% ec2-user@54.82.125.173 '/opt/tomcat/apache-tomcat-9.0.84/bin/startup.sh'"
                     }
