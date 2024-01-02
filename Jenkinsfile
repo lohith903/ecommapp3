@@ -6,7 +6,17 @@ pipeline {
   stages {
     stage('Build Project') {
       steps {
-        sh 'mvn -v'
+        sh 'wget https://downloads.apache.org/maven/maven-3/VERSION/binaries/apache-maven-VERSION-bin.tar.gz'
+ 
+           sh ' tar -xzvf apache-maven-VERSION-bin.tar.gz'
+ 
+           sh 'sudo mv apache-maven-VERSION /opt'
+ 
+           sh 'sudo ln -s /opt/apache-maven-VERSION /opt/apache-maven-VERSION'
+ 
+           sh ' export M2_HOME=/opt/apache-maven-VERSION'
+           sh ' export MAVEN_HOME=/opt/apache-maven-VERSION'
+           sh ' export PATH=${M2_HOME}/bin:${PATH}'
       }
     } 
 
