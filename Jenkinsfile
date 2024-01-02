@@ -9,6 +9,7 @@ pipeline {
         sh 'export M2_HOME=/opt/apache-maven-3.9.6
         sh 'export MAVEN_HOME=/opt/apache-maven-3.9.6
         sh 'export PATH=${M2_HOME}/bin:${PATH}'
+        sh 'mvn-v'
       }
     } 
 
