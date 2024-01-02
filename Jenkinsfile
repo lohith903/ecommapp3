@@ -11,7 +11,7 @@ pipeline {
 
     stage('Deploy WAR File') {
       steps {
-      bat 'ssh -o StrictHostKeyChecking=no -i "/home/ec2-user/rut102.pem"ec2-user@3.91.230.20 "mvn -v"'
+      sh 'ssh -o StrictHostKeyChecking=no -i "/home/ec2-user/rut102.pem"ec2-user@3.91.230.20 "mvn -v"'
       }
     }
 
