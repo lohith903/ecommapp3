@@ -6,11 +6,11 @@ pipeline {
   }
 
   stages {
-    stage('Build Project') {
+    /*stage('Build Project') {
       steps {
         sh "mvn clean install"
       }
-    }
+    } */
 
     stage('Deploy WAR File') {
       steps {
