@@ -39,7 +39,7 @@ pipeline {
   post {
     success {
       echo 'Pipeline succeeded!'
-      // Any cleanup or additional steps you want to perform on success
+      // Any cleanup or additional steps you want to perform on success (t1)
     }
     failure {
       echo 'Pipeline failed. Check the console output for details.'
