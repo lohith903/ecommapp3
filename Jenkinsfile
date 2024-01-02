@@ -1,6 +1,9 @@
 pipeline {
   agent any
 
+  environment {
+    SSH_KEY = credentials('31ad36e5-2953-4667-880e-e295dff1aecd')
+  }
 
   stages {
     /*stage('Build Project') {
@@ -11,7 +14,15 @@ pipeline {
 
     stage('Deploy WAR File') {
       steps {
-      sh 'ssh -o StrictHostKeyChecking=no -i "/home/ec2-user/rut102.pem"root@3.91.230.20 "mvn -v"'
+        withCredentials([sshUserPrivateKey(credentialsId: '31ad36e5-2953-4667-880e-e295dff1aecd', keyFileVariable: 'SSH_KEY')]) {
+          script {
+           
+
+            // Use scp to copy the WAR file to the remote server
+            sh 'ssh -o StrictHostKeyChecking=no -i %SSH_KEY% ec2-user@3.91.230.20 "mvn -v"'
+           // bat "ssh -i %SSH_KEY% ec2-user@54.82.125.173 '/opt/tomcat/apache-tomcat-9.0.84/bin/startup.sh'"
+          }
+        }
       }
     }
 
