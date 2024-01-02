@@ -3,7 +3,7 @@
   
   <modelVersion>4.0.0</modelVersion>
   <groupId>com</groupId>
-  <artifactId>EcommerceApp</artifactId>
+  <artifactId>EcommerceApp_2</artifactId>
   <packaging>war</packaging>
   <version>0.0.1-SNAPSHOT</version>
   <name>EcommerceApp Maven Webapp</name>
