@@ -1,105 +1,92 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-    <modelVersion>4.0.0</modelVersion>
-    
-    <groupId>com</groupId>
-    <artifactId>EcommerceApp</artifactId>
-    <packaging>war</packaging>
-    <version>0.0.1-SNAPSHOT</version>
-    
-    <name>EcommerceApp Maven Webapp</name>
-    <url>http://maven.apache.org</url>
-    
-    <properties>
-        <maven.compiler.source>1.8</maven.compiler.source>
-        <maven.compiler.target>1.8</maven.compiler.target>
-    </properties>
-    
-    <dependencies>
-        <!-- JUnit -->
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>3.8.1</version>
-            <scope>test</scope>
-        </dependency>
-        
-        <!-- Commons FileUpload -->
-        <dependency>
-            <groupId>commons-fileupload</groupId>
-            <artifactId>commons-fileupload</artifactId>
-            <version>1.4</version>
-        </dependency>
+<!-- Root element for Maven POM (Project Object Model) -->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
-        <!-- Commons IO -->
-        <dependency>
-            <groupId>commons-io</groupId>
-            <artifactId>commons-io</artifactId>
-            <version>2.11.0</version>
-        </dependency>
+  <!-- Version of the Maven POM model -->
+  <modelVersion>4.0.0</modelVersion>
 
-        <!-- Servlet API -->
-        <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>servlet-api</artifactId>
-            <version>3.0-alpha-1</version>
-            <scope>provided</scope>
-        </dependency>
+  <!-- Project coordinates (groupId, artifactId, packaging, version) -->
+  <groupId>com</groupId>
+  <artifactId>EcommerceApp</artifactId>
+  <packaging>war</packaging>
+  <version>0.0.1-SNAPSHOT</version>
 
-        <!-- MySQL Connector -->
-        <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-            <version>8.0.29</version>
-        </dependency>
+  <!-- Project name -->
+  <name>EcommerceApp Maven Webapp</name>
 
-        <!-- SQLite JDBC -->
-        <dependency>
-            <groupId>org.xerial</groupId>
-            <artifactId>sqlite-jdbc</artifactId>
-            <version>3.42.0.0</version>
-        </dependency>
+  <!-- Project URL -->
+  <url>http://maven.apache.org</url>
 
-        <!-- ANTLR -->
-        <dependency>
-            <groupId>org.antlr</groupId>
-            <artifactId>antlr4-runtime</artifactId>
-            <version>4.10.1</version>
-        </dependency>
+  <!-- Dependencies section for external libraries -->
+  <dependencies>
 
-        <!-- JSP API -->
-        <dependency>
-            <groupId>javax.servlet.jsp</groupId>
-            <artifactId>jsp-api</artifactId>
-            <version>2.2.1-b03</version>
-            <scope>provided</scope>
-        </dependency>
+    <!-- JUnit dependency for testing (scope: test) -->
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>3.8.1</version>
+      <scope>test</scope>
+    </dependency>
 
-        <!-- Servlet API (Java EE) -->
-        <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>javax.servlet-api</artifactId>
-            <version>3.0.1</version>
-            <scope>provided</scope>
-        </dependency>
-    </dependencies>
+    <!-- Commons FileUpload dependency -->
+    <dependency>
+      <groupId>commons-fileupload</groupId>
+      <artifactId>commons-fileupload</artifactId>
+      <version>1.4</version>
+    </dependency>
 
-    <build>
-        <finalName>EcommerceApp</finalName>
-        <plugins>
-            <!-- Maven War Plugin -->
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-war-plugin</artifactId>
-                <version>3.4.0</version> <!-- Replace with the desired version -->
+    <!-- Commons IO dependency -->
+    <dependency>
+      <groupId>commons-io</groupId>
+      <artifactId>commons-io</artifactId>
+      <version>2.11.0</version>
+    </dependency>
 
-                <!-- Configuration options for the Maven War Plugin -->
-                <configuration>
-                    <!-- Example: Set the web.xml location -->
-                    <webXml>src/main/webapp/WEB-INF/web.xml</webXml>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
+    <!-- Servlet API dependency (scope: provided) -->
+    <dependency>
+      <groupId>javax.servlet</groupId>
+      <artifactId>javax.servlet-api</artifactId> <!-- Changed artifactId -->
+      <version>3.0.1</version>
+      <scope>provided</scope>
+    </dependency>
+
+    <!-- MySQL Connector dependency -->
+    <dependency>
+      <groupId>mysql</groupId>
+      <artifactId>mysql-connector-java</artifactId>
+      <version>8.0.29</version>
+    </dependency>
+
+    <!-- SQLite JDBC dependency -->
+    <dependency>
+      <groupId>org.xerial</groupId>
+      <artifactId>sqlite-jdbc</artifactId>
+      <version>3.42.0.0</version>
+    </dependency>
+
+    <!-- ANTLR Runtime dependency -->
+    <dependency>
+      <groupId>org.antlr</groupId>
+      <artifactId>antlr4-runtime</artifactId>
+      <version>4.10.1</version>
+    </dependency>
+
+    <!-- JSP API dependency (scope: provided) -->
+    <dependency>
+      <groupId>javax.servlet.jsp</groupId>
+      <artifactId>jsp-api</artifactId>
+      <version>2.2.1-b03</version>
+      <scope>provided</scope>
+    </dependency>
+
+    <!-- Servlet API dependency (scope: provided) -->
+    <!-- Removed duplicate dependency, using javax.servlet-api instead -->
+  </dependencies>
+
+  <!-- Build configuration -->
+  <build>
+    <!-- Name of the final artifact without its extension -->
+    <finalName>EcommerceApp</finalName>
+  </build>
+
 </project>
