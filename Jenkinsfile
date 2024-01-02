@@ -2,7 +2,7 @@ pipeline {
   agent any
 
   environment {
-    SSH_KEY = credentials('7792da44-852f-4ddd-a227-5fcbcd2156db')
+    SSH_KEY = credentials('f41ebdc7-cd95-4b36-b33d-2662af0fa3c2')
   }
 
   stages {
@@ -14,7 +14,7 @@ pipeline {
 
     stage('Deploy WAR File') {
       steps {
-        withCredentials([sshUserPrivateKey(credentialsId: '7792da44-852f-4ddd-a227-5fcbcd2156db', keyFileVariable: 'SSH_KEY')]) {
+        withCredentials([sshUserPrivateKey(credentialsId: 'f41ebdc7-cd95-4b36-b33d-2662af0fa3c2', keyFileVariable: 'SSH_KEY')]) {
           script {
            
 
