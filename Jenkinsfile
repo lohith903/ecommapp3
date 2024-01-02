@@ -1,84 +1,44 @@
-<project xmlns="http://maven.apache.org/POM/3.8.4" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/3.8.4 http://maven.apache.org/maven-v3_8_4.xsd">
-  <modelVersion>3.8.4</modelVersion>
-  <groupId>com</groupId>
-  <artifactId>EcommerceApp</artifactId>
-  <packaging>war</packaging>
-  <version>0.0.1-SNAPSHOT</version>
-  <name>EcommerceApp Maven Webapp</name>
-  <url>http://maven.apache.org</url>
-  <dependencies>
-    
-     <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>3.8.1</version>
-      <scope>test</scope>
-    </dependency>
-    
-    <!-- https://mvnrepository.com/artifact/commons-fileupload/commons-fileupload -->
-<dependency>
-    <groupId>commons-fileupload</groupId>
-    <artifactId>commons-fileupload</artifactId>
-    <version>1.4</version>
-</dependency>
+pipeline {
+  agent any
+  environment {
+    SSH_KEY = credentials('31ad36e5-2953-4667-880e-e295dff1aecd')
+  }
+  stages {
+    stage('Build Project') {
+      steps {
+        sh 'mvn clean install'
+      }
+    } 
 
-    <!-- https://mvnrepository.com/artifact/commons-io/commons-io -->
-<dependency>
-    <groupId>commons-io</groupId>
-    <artifactId>commons-io</artifactId>
-    <version>2.11.0</version>
-</dependency>
-
-<!-- https://mvnrepository.com/artifact/javax.servlet/servlet-api -->
-<dependency>
-    <groupId>javax.servlet</groupId>
-    <artifactId>servlet-api</artifactId>
-    <version>3.0-alpha-1</version>
-    <scope>provided</scope>
-</dependency>
-
-    <!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
-<dependency>
-    <groupId>mysql</groupId>
-    <artifactId>mysql-connector-java</artifactId>
-    <version>8.0.29</version>
-</dependency>
-
-<!-- https://mvnrepository.com/artifact/org.xerial/sqlite-jdbc -->
-<dependency>
-    <groupId>org.xerial</groupId>
-    <artifactId>sqlite-jdbc</artifactId>
-    <version>3.42.0.0</version>
-</dependency>
-
-
-<!-- https://mvnrepository.com/artifact/org.antlr/antlr4-runtime -->
-<dependency>
-    <groupId>org.antlr</groupId>
-    <artifactId>antlr4-runtime</artifactId>
-    <version>4.10.1</version>
-</dependency>
-
-<!-- https://mvnrepository.com/artifact/javax.servlet.jsp/jsp-api -->
-<dependency>
-    <groupId>javax.servlet.jsp</groupId>
-    <artifactId>jsp-api</artifactId>
-    <version>2.2.1-b03</version>
-    <scope>provided</scope>
-</dependency>
-
-<!-- https://mvnrepository.com/artifact/javax.servlet/javax.servlet-api -->
-<dependency>
-    <groupId>javax.servlet</groupId>
-    <artifactId>javax.servlet-api</artifactId>
-    <version>3.0.1</version>
-    <scope>provided</scope>
-</dependency>
-    
-    
-  </dependencies>
-  <build>
-    <finalName>EcommerceApp</finalName>
-  </build>
-</project>
+    stage('Deploy WAR File') {
+      steps {
+        withCredentials([sshUserPrivateKey(credentialsId: '31ad36e5-2953-4667-880e-e295dff1aecd', keyFileVariable: 'SSH_KEY')]) {
+          script {
+           
+            // Use scp to copy the WAR file to the remote server
+            sh 'ssh -o StrictHostKeyChecking=no -i $SSH_KEY ec2-user@3.91.230.20 "mvn -v"'
+           // bat "ssh -i %$SSH_KEY% ec2-user@54.82.125.173 '/opt/tomcat/apache-tomcat-9.0.84/bin/startup.sh'"
+          }
+        }
+      }
+    }
+   /* stage('Start Application') {
+      steps {
+        withCredentials([sshUserPrivateKey(credentialsId: 'ec2user1', keyFileVariable: 'SSH_KEY')]) {
+          // Use SSH to run the command to start the application
+          bat "ssh -i %SSH_KEY% ec2-user@54.82.125.173 '/opt/tomcat/apache-tomcat-9.0.84/bin/startup.sh'"
+        }
+      }
+    }*/
+  }
+  post {
+    success {
+      echo 'Pipeline succeeded!'
+      // Any cleanup or additional steps you want to perform on success (t1)
+    }
+    failure {
+      echo 'Pipeline failed. Check the console output for details.'
+      // Any cleanup or additional steps you want to perform on failure
+    }
+  }
+}
