@@ -7,11 +7,36 @@ pipeline {
   stages {
     stage('Build Project') {
       steps {
-        sh 'mvn cleam install'
+        sh 'mvn clean install'
       }
     } 
+    // Transfer
+    stage('Deploy to Remote Server') {
+      steps {
+        script {
+          def remoteServer = '44.211.82.24'
+          def remoteDirectory = '/temp/'
+          def warFileName = 'EcommerceApp.war'
+          sshPublisher(
+            publishers: [
+              sshPublisherDesc(
+                configName: 'targetr', // The SSH configuration name from Jenkins
+                transfers: [
+                  sshTransfer(
+                    sourceFiles: "target/${warFileName}",
+                    removePrefix: 'target',
+                    remoteDirectory: "${remoteDirectory}"
+                  )
+                ]
+              )
+            ]
+          )
+        }
+      }
+    }
 
-   stage('Deploy WAR File') {
+    
+       stage('Deploy WAR File') {
       steps {
         withCredentials([sshUserPrivateKey(credentialsId: 'c1aa46bd-7622-414f-8c26-c4579e245a34', keyFileVariable: 'SSH_KEY')]) {
           script {
@@ -23,7 +48,6 @@ pipeline {
         }
       }
     }
-  
   }
   post {
     success {
