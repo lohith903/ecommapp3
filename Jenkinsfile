@@ -15,7 +15,7 @@ pipeline {
             steps {
                 script {
                     def remoteServer = '44.211.82.24'
-                    def remoteDirectory = '/home/ec2-user'
+                    def remoteDirectory = '/~'
                     def warFileName = 'EcommerceApp.war'
 
                     sshPublisher(
