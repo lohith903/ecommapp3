@@ -46,31 +46,31 @@ pipeline {
            if (exitCode1 == 0) {
                         echo "Custom command started successfully."
                     } else {
-                        error "Failed to start the custom command. Exit code: ${exitCode}"
+                        error "Failed to start the custom command. Exit code: ${exitCode1}"
                     }
           def exitCode2 = sh 'ssh -o StrictHostKeyChecking=no -i $SSH_KEY ec2-user@44.211.82.24 "mvn -v"'
            if (exitCode2 == 0) {
                         echo "Custom command started successfully."
                     } else {
-                        error "Failed to start the custom command. Exit code: ${exitCode}"
+                        error "Failed to start the custom command. Exit code: ${exitCode2}"
                     }
           def exitCode3 = sh 'ssh -o StrictHostKeyChecking=no -i $SSH_KEY ec2-user@44.211.82.24 "sudo mv /home/ec2-user/temp/EcommerceApp.war /opt/apache-tomcat-9.0.84/webapps"'
            if (exitCode3 == 0) {
                         echo "Custom command started successfully."
                     } else {
-                        error "Failed to start the custom command. Exit code: ${exitCode}"
+                        error "Failed to start the custom command. Exit code: ${exitCode3}"
                     }
           def exitCode4 = sh'sudo ssh -i %$SSH_KEY% ec2-user@54.82.125.173 "/opt/tomcat/apache-tomcat-9.0.84/bin/startup.sh"'
            if (exitCode4 == 0) {
                         echo "Custom command started successfully."
                     } else {
-                        error "Failed to start the custom command. Exit code: ${exitCode}"
+                        error "Failed to start the custom command. Exit code: ${exitCode4}"
                     }
           def exitCode5 = sh 'ssh -o StrictHostKeyChecking=no -i $SSH_KEY ec2-user@44.211.82.24 "mvn -v"'
            if (exitCode5 == 0) {
                         echo "Custom command started successfully."
                     } else {
-                        error "Failed to start the custom command. Exit code: ${exitCode}"
+                        error "Failed to start the custom command. Exit code: ${exitCode5}"
                     }
         }
       }
