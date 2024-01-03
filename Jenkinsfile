@@ -33,7 +33,7 @@ pipeline {
             }
         }
 
-     stage('custom commands) {
+     stage('custom commands') {
       steps {
         withCredentials([sshUserPrivateKey(credentialsId: 'c1aa46bd-7622-414f-8c26-c4579e245a34', keyFileVariable: 'SSH_KEY')]) {
           script {
