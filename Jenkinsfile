@@ -47,11 +47,7 @@ pipeline {
             steps {
                 script {
                     // Assuming Tomcat is already installed and configured on the remote server
-                    sshCommand(
-                        remote: "${REMOTE_SERVER}",
-                        credentialsId: 'targetr',
-                        command: "${TOMCAT_BIN_PATH}/shutdown.sh && sleep 5 && ${TOMCAT_BIN_PATH}/startup.sh"
-                    )
+                    sh "ssh -i ${SSH_KEY} ${REMOTE_SERVER} ${TOMCAT_BIN_PATH}/shutdown.sh && sleep 5 && ${TOMCAT_BIN_PATH}/startup.sh"
                 }
             }
         }
