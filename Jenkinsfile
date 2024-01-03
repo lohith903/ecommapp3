@@ -38,7 +38,7 @@ pipeline {
 
 //end transfer
 // shutdown app
-    stage('shutdown Application') {
+    
     stage('shutdown Application') {
       steps {
         withCredentials([sshUserPrivateKey(credentialsId: 'ec2user1', keyFileVariable: 'SSH_KEY')]) {
@@ -51,9 +51,9 @@ pipeline {
         }
       }
     }
-      }
-    }
-  }
+      
+    
+  
   post {
     success {
       echo 'Pipeline succeeded!'
@@ -63,5 +63,6 @@ pipeline {
       echo 'Pipeline failed. Check the console output for details.'
       // Any cleanup or additional steps you want to perform on failure
     }
+  }
   }
 }
