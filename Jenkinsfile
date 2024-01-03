@@ -15,7 +15,7 @@ pipeline {
             steps {
                 script {
                     def remoteServer = '44.211.82.24'
-                    //def remoteDirectory = '/opt/apache-tomcat-9.0.84/webapps'
+                    def remoteDirectory = '/temp/'
                     def warFileName = 'EcommerceApp.war'
 
                     sshPublisher(
@@ -26,7 +26,7 @@ pipeline {
                                     sshTransfer(
                                         sourceFiles: "target/${warFileName}",
                                         removePrefix: 'target',
-                                        //remoteDirectory: "${remoteDirectory}"
+                                        remoteDirectory: "${remoteDirectory}"
                                     )
                                 ]
                             )
@@ -37,29 +37,41 @@ pipeline {
         }
 
 //end transfer
-
-
-
-   stage('Check Mvn') {
+// shutdown app
+    stage('shutdown Application') {
+      steps {
+        withCredentials([sshUserPrivateKey(credentialsId: 'ec2user1', keyFileVariable: 'SSH_KEY')]) {
+          // Use SSH to run the command to start the application
+          sh'sudo ssh -i %SSH_KEY% ec2-user@54.82.125.173 "/opt/tomcat/apache-tomcat-9.0.84/bin/shutdown.sh"'
+        }
+      }
+    }
+//
+//Move WAR file
+   stage('Move War file') {
       steps {
         withCredentials([sshUserPrivateKey(credentialsId: 'c1aa46bd-7622-414f-8c26-c4579e245a34', keyFileVariable: 'SSH_KEY')]) {
           script {
            
             
             sh 'ssh -o StrictHostKeyChecking=no -i $SSH_KEY ec2-user@44.211.82.24 "mvn -v"'
+             sh 'ssh -o StrictHostKeyChecking=no -i $SSH_KEY ec2-user@44.211.82.24 "sudo mv /home/ec2-user/temp/EcommerceApp.war /opt/apache-tomcat-9.0.84/webapps"'
+           
+                      
           
           }
         }
       }
     }
-
-  /*   stage('Deploy WAR File') {
+//
+//Start New App
+     stage('Start New App') {
       steps {
         withCredentials([sshUserPrivateKey(credentialsId: 'c1aa46bd-7622-414f-8c26-c4579e245a34', keyFileVariable: 'SSH_KEY')]) {
           script {
            
             //Use scp to copy the WAR file to the remote server
-            sh'ssh -i %$SSH_KEY% ec2-user@54.82.125.173 "/opt/tomcat/apache-tomcat-9.0.84/bin/startup.sh"'
+            sh'sudo ssh -i %$SSH_KEY% ec2-user@54.82.125.173 "/opt/tomcat/apache-tomcat-9.0.84/bin/startup.sh"'
           }
         }
       }
@@ -72,7 +84,7 @@ pipeline {
           sh'ssh -i %SSH_KEY% ec2-user@54.82.125.173 "/opt/tomcat/apache-tomcat-9.0.84/bin/startup.sh"'
         }
       }
-    }*/
+    }
   }
   post {
     success {
