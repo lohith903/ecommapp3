@@ -7,22 +7,22 @@ pipeline {
   stages {
     stage('Build Project') {
       steps {
-        sh 'mvn -v'
+        sh 'mvn clean install'
       }
     } 
 
-  /* stage('Deploy WAR File') {
+   stage('Deploy WAR File') {
       steps {
         withCredentials([sshUserPrivateKey(credentialsId: 'c1aa46bd-7622-414f-8c26-c4579e245a34', keyFileVariable: 'SSH_KEY')]) {
           script {
            
             // Use scp to copy the WAR file to the remote server
-            sh 'ssh -o StrictHostKeyChecking=no -i $SSH_KEY ec2-user@3.91.230.20 "mvn -v"'
+            sh 'ssh -o StrictHostKeyChecking=no -i $SSH_KEY ec2-user@44.211.82.24 "mvn -v"'
            // bat "ssh -i %$SSH_KEY% ec2-user@54.82.125.173 '/opt/tomcat/apache-tomcat-9.0.84/bin/startup.sh'"
           }
         }
       }
-    }*/
+    }
    /* stage('Start Application') {
       steps {
         withCredentials([sshUserPrivateKey(credentialsId: 'ec2user1', keyFileVariable: 'SSH_KEY')]) {
