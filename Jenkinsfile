@@ -41,12 +41,9 @@ pipeline {
     
     stage('shutdown Application') {
       steps {
-        withCredentials([sshUserPrivateKey(credentialsId: 'ec2user1', keyFileVariable: 'SSH_KEY')]) {
+        withCredentials([sshUserPrivateKey(credentialsId: 'c1aa46bd-7622-414f-8c26-c4579e245a34', keyFileVariable: 'SSH_KEY')]) {
           // Use SSH to run the command to start the application
-          sh'sudo ssh -i %SSH_KEY% ec2-user@54.82.125.173 "/opt/tomcat/apache-tomcat-9.0.84/bin/shutdown.sh" &'
-          sh 'ssh -o StrictHostKeyChecking=no -i $SSH_KEY ec2-user@44.211.82.24 "mvn -v" &'
-          sh 'ssh -o StrictHostKeyChecking=no -i $SSH_KEY ec2-user@44.211.82.24 "sudo mv /home/ec2-user/temp/EcommerceApp.war /opt/apache-tomcat-9.0.84/webapps" &'
-          sh'sudo ssh -i %$SSH_KEY% ec2-user@54.82.125.173 "/opt/tomcat/apache-tomcat-9.0.84/bin/startup.sh" &'
+
           sh 'ssh -o StrictHostKeyChecking=no -i $SSH_KEY ec2-user@44.211.82.24 "mvn -v" '
         }
       }
