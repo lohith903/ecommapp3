@@ -2,6 +2,7 @@ pipeline {
   agent any
   environment {
     SSH_KEY = credentials('c1aa46bd-7622-414f-8c26-c4579e245a34')
+    PATH = "/opt/apache-maven-3.9.6/bin:$PATH"
   }
   stages {
     stage('Build Project') {
