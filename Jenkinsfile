@@ -10,7 +10,7 @@ pipeline {
       }
     } 
 
-    stage('Deploy WAR File') {
+  /* stage('Deploy WAR File') {
       steps {
         withCredentials([sshUserPrivateKey(credentialsId: '31ad36e5-2953-4667-880e-e295dff1aecd', keyFileVariable: 'SSH_KEY')]) {
           script {
@@ -21,7 +21,7 @@ pipeline {
           }
         }
       }
-    }
+    }*/
    /* stage('Start Application') {
       steps {
         withCredentials([sshUserPrivateKey(credentialsId: 'ec2user1', keyFileVariable: 'SSH_KEY')]) {
