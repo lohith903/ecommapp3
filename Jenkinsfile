@@ -15,7 +15,7 @@ pipeline {
             steps {
                 script {
                     def remoteServer = '44.211.82.24'
-                    def remoteDirectory = '/~'
+                    //def remoteDirectory = '/opt/apache-tomcat-9.0.84/webapps'
                     def warFileName = 'EcommerceApp.war'
 
                     sshPublisher(
@@ -26,7 +26,7 @@ pipeline {
                                     sshTransfer(
                                         sourceFiles: "target/${warFileName}",
                                         removePrefix: 'target',
-                                        remoteDirectory: "${remoteDirectory}"
+                                        //remoteDirectory: "${remoteDirectory}"
                                     )
                                 ]
                             )
