@@ -1,6 +1,5 @@
 pipeline {
     agent any
-
     stages {
         stage('Build Project') {
             steps {
@@ -14,7 +13,6 @@ pipeline {
                     def remoteServer = 'your_remote_server'
                     def remoteDirectory = '/path/to/remote/directory'
                     def warFileName = 'your-app.war'
-
                     sshPublisher(
                         publishers: [
                             sshPublisherDesc(
@@ -48,8 +46,6 @@ pipeline {
         }
       }
     }
-    }
-
   post {
     success {
       echo 'Pipeline succeeded!'
@@ -59,5 +55,5 @@ pipeline {
       echo 'Pipeline failed. Check the console output for details.'
       // Any cleanup or additional steps you want to perform on failure
     }
-   }
+  }
 }
