@@ -1,32 +1,39 @@
 pipeline {
-  agent any
-  environment {
-    SSH_KEY = credentials('c1aa46bd-7622-414f-8c26-c4579e245a34')
-    PATH = "/opt/apache-maven-3.9.6/bin:$PATH"
-  }
-  stages {
-    stage('Build Project') {
-      steps {
-        sh 'mvn clean install'
-      }
-    } 
-// transfer
-        stage('Deploy to Remote Server') {
+    agent any
+    
+    environment {
+        SSH_KEY = credentials('c1aa46bd-7622-414f-8c26-c4579e245a34')
+        PATH = "/opt/apache-maven-3.9.6/bin:$PATH"
+        REMOTE_SERVER = '54.82.125.173'
+        REMOTE_DIRECTORY = '/your/remote/directory/' // Specify the actual directory path on the remote server
+        WAR_FILE_NAME = 'EcommerceApp.war'
+        TOMCAT_BIN_PATH = '/opt/tomcat/apache-tomcat-9.0.84/bin/'
+    }
+
+    stages {
+        stage('Build Project') {
             steps {
                 script {
-                    def remoteServer = '44.211.82.24'
-                    def remoteDirectory = '/temp/'
-                    def warFileName = 'EcommerceApp.war'
+                    sh 'mvn clean install'
+                }
+            }
+        }
 
+        stage('Transfer to Remote Server') {
+            steps {
+                script {
+                    // Transfer the WAR file to the remote server
                     sshPublisher(
+                        continueOnError: true,
+                        failOnError: true,
                         publishers: [
                             sshPublisherDesc(
                                 configName: 'targetr', // The SSH configuration name from Jenkins
                                 transfers: [
                                     sshTransfer(
-                                        sourceFiles: "target/${warFileName}",
-                                        removePrefix: 'target',
-                                        remoteDirectory: "${remoteDirectory}"
+                                        sourceFiles: "target/${WAR_FILE_NAME}",
+                                        removePrefix: 'target/',
+                                        remoteDirectory: "${REMOTE_DIRECTORY}"
                                     )
                                 ]
                             )
@@ -36,31 +43,28 @@ pipeline {
             }
         }
 
-//end transfer
-// shutdown app
-    
-    stage('shutdown Application') {
-      steps {
-        withCredentials([sshUserPrivateKey(credentialsId: 'c1aa46bd-7622-414f-8c26-c4579e245a34', keyFileVariable: 'SSH_KEY')]) {
-          // Use SSH to run the command to start the application
-
-          sh 'ssh -o StrictHostKeyChecking=no -i $SSH_KEY ec2-user@44.211.82.24 "mvn -v" '
+        stage('Deploy to Tomcat') {
+            steps {
+                script {
+                    // Assuming Tomcat is already installed and configured on the remote server
+                    sshCommand(
+                        remote: "${REMOTE_SERVER}",
+                        credentialsId: 'targetr',
+                        command: "${TOMCAT_BIN_PATH}/shutdown.sh && sleep 5 && ${TOMCAT_BIN_PATH}/startup.sh"
+                    )
+                }
+            }
         }
-      }
     }
-      
-    
-  }
-  post {
-    success {
-      echo 'Pipeline succeeded!'
-      // Any cleanup or additional steps you want to perform on success (t1)
-    }
-    failure {
-      echo 'Pipeline failed. Check the console output for details.'
-      // Any cleanup or additional steps you want to perform on failure
-    }
-   }
 
-  
+    post {
+        success {
+            echo 'Pipeline succeeded!'
+            // Any cleanup or additional steps you want to perform on success
+        }
+        failure {
+            echo 'Pipeline failed. Check the console output for details.'
+            // Any cleanup or additional steps you want to perform on failure
+        }
+    }
 }
