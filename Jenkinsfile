@@ -43,7 +43,7 @@ pipeline {
         withCredentials([sshUserPrivateKey(credentialsId: 'c1aa46bd-7622-414f-8c26-c4579e245a34', keyFileVariable: 'SSH_KEY')]) {
           script {
             // Shutdown Tomcat
-            def exitCode1 = sh(script: 'sudo ssh -i $SSH_KEY ec2-user@54.82.125.173 "/opt/tomcat/apache-tomcat-9.0.84/bin/shutdown.sh"', returnStatus: true)
+            def exitCode1 = sh(script: ' ssh -i $SSH_KEY ec2-user@54.82.125.173 "/opt/tomcat/apache-tomcat-9.0.84/bin/shutdown.sh"', returnStatus: true)
             if (exitCode1 == 0) {
               echo 'Tomcat shutdown successfully.'
             } else {
@@ -67,7 +67,7 @@ pipeline {
             }
 
             // Start Tomcat
-            def exitCode4 = sh(script: 'sudo ssh -i $SSH_KEY ec2-user@54.82.125.173 "/opt/tomcat/apache-tomcat-9.0.84/bin/startup.sh"', returnStatus: true)
+            def exitCode4 = sh(script: 'ssh -i $SSH_KEY ec2-user@54.82.125.173 "/opt/tomcat/apache-tomcat-9.0.84/bin/startup.sh"', returnStatus: true)
             if (exitCode4 == 0) {
               echo 'Tomcat started successfully.'
             } else {
