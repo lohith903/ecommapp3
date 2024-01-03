@@ -1,7 +1,7 @@
 pipeline {
   agent any
   environment {
-    SSH_KEY = credentials('31ad36e5-2953-4667-880e-e295dff1aecd')
+    SSH_KEY = credentials('c1aa46bd-7622-414f-8c26-c4579e245a34')
   }
   stages {
     stage('Build Project') {
@@ -12,7 +12,7 @@ pipeline {
 
   /* stage('Deploy WAR File') {
       steps {
-        withCredentials([sshUserPrivateKey(credentialsId: '31ad36e5-2953-4667-880e-e295dff1aecd', keyFileVariable: 'SSH_KEY')]) {
+        withCredentials([sshUserPrivateKey(credentialsId: 'c1aa46bd-7622-414f-8c26-c4579e245a34', keyFileVariable: 'SSH_KEY')]) {
           script {
            
             // Use scp to copy the WAR file to the remote server
