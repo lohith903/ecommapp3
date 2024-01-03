@@ -53,7 +53,7 @@ pipeline {
     }
       
     
-  
+  }
   post {
     success {
       echo 'Pipeline succeeded!'
@@ -63,6 +63,7 @@ pipeline {
       echo 'Pipeline failed. Check the console output for details.'
       // Any cleanup or additional steps you want to perform on failure
     }
-  }
-  }
+   }
+
+  
 }
