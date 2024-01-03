@@ -10,24 +10,66 @@ pipeline {
         sh 'mvn clean install'
       }
     } 
+// transfer
+        stage('Deploy to Remote Server') {
+            steps {
+                script {
+                    def remoteServer = '44.211.82.24'
+                    def remoteDirectory = '/home/ec2-user'
+                    def warFileName = 'EcommerceApp.war'
 
-   stage('Deploy WAR File') {
+                    sshPublisher(
+                        publishers: [
+                            sshPublisherDesc(
+                                configName: 'targetr', // The SSH configuration name from Jenkins
+                                transfers: [
+                                    sshTransfer(
+                                        sourceFiles: "target/${warFileName}",
+                                        removePrefix: 'target',
+                                        remoteDirectory: "${remoteDirectory}"
+                                    )
+                                ]
+                            )
+                        ]
+                    )
+                }
+            }
+        }
+
+//end transfer
+
+
+
+   stage('Check Mvn') {
       steps {
         withCredentials([sshUserPrivateKey(credentialsId: 'c1aa46bd-7622-414f-8c26-c4579e245a34', keyFileVariable: 'SSH_KEY')]) {
           script {
            
-            // Use scp to copy the WAR file to the remote server
+            
             sh 'ssh -o StrictHostKeyChecking=no -i $SSH_KEY ec2-user@44.211.82.24 "mvn -v"'
-           // bat "ssh -i %$SSH_KEY% ec2-user@54.82.125.173 '/opt/tomcat/apache-tomcat-9.0.84/bin/startup.sh'"
+          
           }
         }
       }
     }
-   /* stage('Start Application') {
+
+  /*   stage('Deploy WAR File') {
+      steps {
+        withCredentials([sshUserPrivateKey(credentialsId: 'c1aa46bd-7622-414f-8c26-c4579e245a34', keyFileVariable: 'SSH_KEY')]) {
+          script {
+           
+            //Use scp to copy the WAR file to the remote server
+            sh'ssh -i %$SSH_KEY% ec2-user@54.82.125.173 "/opt/tomcat/apache-tomcat-9.0.84/bin/startup.sh"'
+          }
+        }
+      }
+    }
+
+    stage('Start Application') {
       steps {
         withCredentials([sshUserPrivateKey(credentialsId: 'ec2user1', keyFileVariable: 'SSH_KEY')]) {
           // Use SSH to run the command to start the application
-          bat "ssh -i %SSH_KEY% ec2-user@54.82.125.173 '/opt/tomcat/apache-tomcat-9.0.84/bin/startup.sh'"
+          sh'ssh -i %SSH_KEY% ec2-user@54.82.125.173 "/opt/tomcat/apache-tomcat-9.0.84/bin/startup.sh"'
         }
       }
     }*/
