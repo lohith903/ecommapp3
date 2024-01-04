@@ -31,7 +31,7 @@ body,h1,h2,h3,h4,h5,h6,.w3-wide {font-family: "Montserrat", sans-serif;}
 	<div style="background-color: #ebe9eb">
 	<br>
 	<center>
-	<h2>Be Smart, be you</h2>
+	<h2>Be cool, be you</h2>
 	<h2><b>With Smart Devices</b></h2>
 	<br>
 	</center>
