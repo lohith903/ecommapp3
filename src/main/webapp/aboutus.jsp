@@ -32,7 +32,7 @@ body,h1,h2,h3,h4,h5,h6,.w3-wide {font-family: "Montserrat", sans-serif;}
 	<br>
 	<center>
 	<h2>Be cool, be you</h2>
-	<h2><b>With Smart Devices</b></h2>
+	<h2><b>With Smart Devices, be smart</b></h2>
 	<br>
 	</center>
 	</div>
