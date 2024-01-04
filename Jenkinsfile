@@ -42,7 +42,7 @@ pipeline {
           script {
 
            
-            sh 'ssh -o StrictHostKeyChecking=no -i $SSH_KEY ec2-user@52.90.104.229 "mvn -v"'
+            sh 'ssh -o StrictHostKeyChecking=no -i $SSH_KEY ec2-user@52.90.104.229 "bash /home/ec2-user/commamd.txt"'
          
           }
         }
