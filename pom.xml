@@ -87,6 +87,20 @@
   <build>
     <!-- Name of the final artifact without its extension -->
     <finalName>EcommerceApp</finalName>
+    
+    <!-- Maven Compiler Plugin Configuration -->
+  <plugins>
+    <plugin>
+      <groupId>org.apache.maven.plugins</groupId>
+      <artifactId>maven-compiler-plugin</artifactId>
+      <version>3.8.1</version>
+      <configuration>
+        <!-- Source and target Java versions -->
+        <source>1.8</source>
+        <target>1.8</target>
+      </configuration>
+    </plugin>
+  </plugins>
   </build>
 
 </project>
